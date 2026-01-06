@@ -180,13 +180,23 @@ class _ProfileKYCPageState extends State<ProfileKYCPage> {
         ),
         centerTitle: true,
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
+      body: SingleChildScrollView(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
                   const SizedBox(height: 10),
+                  if (_isLoading)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2)),
+                          SizedBox(width: 8),
+                          Text('Loading profile...'),
+                        ],
+                      ),
+                    ),
                   Center(
                     child: Column(
                       children: [

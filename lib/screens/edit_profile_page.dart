@@ -19,7 +19,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final _emailController = TextEditingController();
   final _mobileController = TextEditingController();
 
-  bool _isLoading = true;
   bool _isSaving = false;
   bool _isFetching = false; // inline fetch indicator
   UserProfileData? _userProfile;
@@ -57,12 +56,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
           _lastNameController.text = _userProfile?.basicInfo.lastName ?? '';
           _emailController.text = _userProfile?.basicInfo.email ?? '';
           _mobileController.text = _userProfile?.basicInfo.mobile ?? '';
-          _isLoading = false;
           _isFetching = false;
         });
       } else {
         setState(() {
-          _isLoading = false;
           _isFetching = false;
         });
         if (mounted) {
@@ -73,7 +70,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       }
     } catch (e) {
       setState(() {
-        _isLoading = false;
         _isFetching = false;
       });
       if (mounted) {

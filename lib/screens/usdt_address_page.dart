@@ -56,6 +56,11 @@ class _UsdtAddressPageState extends State<UsdtAddressPage> {
     setState(() => _isLoading = true);
 
     try {
+      if (_usdtAddressController.text.trim() != _confirmAddressController.text.trim()) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Addresses do not match')));
+        return;
+      }
+
       final userIdStr = await AuthService.getUserId();
       if (userIdStr == null) throw Exception('User not logged in');
 
@@ -73,7 +78,8 @@ class _UsdtAddressPageState extends State<UsdtAddressPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('USDT address saved successfully')),
         );
-        Navigator.of(context).pop();
+        // Refresh the current value without leaving the page
+        await _loadCurrentUsdt();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(resp?.message ?? 'Failed to save address')),

@@ -80,29 +80,31 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
           ),
         ),
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _transactions.isEmpty
-              ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.receipt_long, size: 64, color: Colors.grey[400]),
-                  const SizedBox(height: 16),
-                  Text(
-                    'No Transactions Yet',
-                    style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey[600],
-                    ),
+      body: RefreshIndicator(
+        onRefresh: _loadTransactionHistory,
+        child: _transactions.isEmpty
+            ? SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 80.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.receipt_long, size: 64, color: Colors.grey[400]),
+                      const SizedBox(height: 16),
+                      Text(
+                        _isLoading ? 'Loading transactions...' : 'No Transactions Yet',
+                        style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
-          : RefreshIndicator(
-              onRefresh: _loadTransactionHistory,
-              child: ListView.builder(
+                ),
+              )
+            : ListView.builder(
                 padding: const EdgeInsets.all(16),
                 itemCount: _transactions.length,
                 itemBuilder: (context, index) {
@@ -110,7 +112,7 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                   return _buildUnifiedTransactionCard(tx);
                 },
               ),
-            ),
+      ),
     );
   }
 

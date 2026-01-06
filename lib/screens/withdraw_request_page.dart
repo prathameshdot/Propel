@@ -121,40 +121,40 @@ class _WithdrawRequestPageState extends State<WithdrawRequestPage> {
             ),
             const SizedBox(height: 15),
 
-            GestureDetector(
-              onTap: () {
-                // TODO: open bank account picker / add bank flow
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 15,
-                  horizontal: 12,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey.shade300),
-                ),
-                child: Row(
-                  children: [
-                    Icon(Icons.add, color: brandColor),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        'Add Bank Account',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    Icon(Icons.chevron_right, color: Colors.grey[400]),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 15),
+            // GestureDetector(
+            //   onTap: () {
+            //     // TODO: open bank account picker / add bank flow
+            //   },
+            //   child: Container(
+            //     padding: const EdgeInsets.symmetric(
+            //       vertical: 15,
+            //       horizontal: 12,
+            //     ),
+            //     decoration: BoxDecoration(
+            //       color: Colors.white,
+            //       borderRadius: BorderRadius.circular(8),
+            //       border: Border.all(color: Colors.grey.shade300),
+            //     ),
+            //     child: Row(
+            //       children: [
+            //         Icon(Icons.add, color: brandColor),
+            //         const SizedBox(width: 12),
+            //         Expanded(
+            //           child: Text(
+            //             'Add Bank Account',
+            //             style: TextStyle(
+            //               fontSize: 15,
+            //               color: Colors.grey[600],
+            //               fontWeight: FontWeight.w400,
+            //             ),
+            //           ),
+            //         ),
+            //         Icon(Icons.chevron_right, color: Colors.grey[400]),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(height: 15),
 
             Container(
               decoration: BoxDecoration(

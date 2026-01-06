@@ -74,69 +74,71 @@ class _TopupDetailsPageState extends State<TopupDetailsPage> {
         ),
         centerTitle: true,
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-              : _deposits.isEmpty
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.account_balance_wallet_outlined,
-                            size: 64,
-                            color: Colors.grey,
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'No deposit history found',
-                            style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
+      body: RefreshIndicator(
+        onRefresh: _loadDepositHistory,
+        child: _deposits.isEmpty
+            ? SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 80.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.account_balance_wallet_outlined,
+                        size: 64,
+                        color: Colors.grey,
                       ),
-                    )
-                  : RefreshIndicator(
-                      onRefresh: _loadDepositHistory,
-                      child: ListView.builder(
-                        padding: const EdgeInsets.all(20.0),
-                        itemCount: _deposits.length,
-                        itemBuilder: (context, index) {
-                          final deposit = _deposits[index];
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 12),
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withValues(alpha: 0.1),
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Show exact API keys and values
-                                _buildKeyValue('id', deposit.id.toString()),
-                                _buildKeyValue('amount', deposit.amount),
-                                _buildKeyValue('transaction_hash', deposit.transactionHash),
-                                _buildKeyValue('remarks', deposit.remarks),
-                                _buildKeyValue('status', deposit.status),
-                                _buildKeyValue('approve_date', deposit.approveDate ?? ''),
-                                _buildKeyValue('admin_notes', deposit.adminNotes ?? ''),
-                                _buildKeyValue('created_at', deposit.createdAt),
-                              ],
-                            ),
-                          );
-                        },
+                      const SizedBox(height: 16),
+                      Text(
+                        _isLoading ? 'Loading deposits...' : 'No deposit history found',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
                       ),
+                    ],
+                  ),
+                ),
+              )
+            : ListView.builder(
+                padding: const EdgeInsets.all(20.0),
+                itemCount: _deposits.length,
+                itemBuilder: (context, index) {
+                  final deposit = _deposits[index];
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withValues(alpha: 0.1),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Show exact API keys and values
+                        _buildKeyValue('id', deposit.id.toString()),
+                        _buildKeyValue('amount', deposit.amount),
+                        _buildKeyValue('transaction_hash', deposit.transactionHash),
+                        _buildKeyValue('remarks', deposit.remarks),
+                        _buildKeyValue('status', deposit.status),
+                        _buildKeyValue('approve_date', deposit.approveDate ?? ''),
+                        _buildKeyValue('admin_notes', deposit.adminNotes ?? ''),
+                        _buildKeyValue('created_at', deposit.createdAt),
+                      ],
+                    ),
+                  );
+                },
+              ),
+      ),
     );
   }
 
